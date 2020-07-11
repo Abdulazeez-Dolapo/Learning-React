@@ -1,39 +1,12 @@
-import React, { useState, useEffect } from "react"
-import axios from "axios"
+import React from "react"
 import Loader from "../Components/Loader"
 import Card from "../Components/ProductCard"
+import useAxios from "../Hooks/requests"
 
 function Home() {
-	const [products, setProducts] = useState({
-		loading: true,
-		data: null,
-		error: false,
-	})
 	const URL = `https://jsonplaceholder.typicode.com/users`
 
-	useEffect(() => {
-		setProducts({
-			loading: true,
-			data: null,
-			error: false,
-		})
-		axios
-			.get(URL)
-			.then(res => {
-				setProducts({
-					loading: false,
-					data: res.data,
-					error: false,
-				})
-			})
-			.catch(err => {
-				setProducts({
-					loading: false,
-					data: null,
-					error: true,
-				})
-			})
-	}, [URL])
+	let products = useAxios(URL)
 
 	let content = null
 

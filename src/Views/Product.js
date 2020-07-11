@@ -2,39 +2,14 @@ import React, { useState, useEffect } from "react"
 import { useParams, Link } from "react-router-dom"
 import axios from "axios"
 import Loader from "../Components/Loader"
+import useAxios from "../Hooks/requests"
 
 function Product() {
 	const { id } = useParams()
-	const [product, setProduct] = useState({
-		loading: true,
-		data: null,
-		error: false,
-	})
+
 	const URL = `https://jsonplaceholder.typicode.com/users/${id}`
 
-	useEffect(() => {
-		setProduct({
-			loading: true,
-			data: null,
-			error: false,
-		})
-		axios
-			.get(URL)
-			.then(res => {
-				setProduct({
-					loading: false,
-					data: res.data,
-					error: false,
-				})
-			})
-			.catch(err => {
-				setProduct({
-					loading: false,
-					data: null,
-					error: true,
-				})
-			})
-	}, [URL])
+	const product = useAxios(URL)
 
 	let content = null
 
